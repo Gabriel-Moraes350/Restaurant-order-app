@@ -8,9 +8,9 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import Services.OutputServices;
 import restaurant.App.Factory.FactoryPeriod;
 import restaurant.App.Model.Period.PeriodDay;
+import restaurant.App.Services.OutputServices;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,4 +1,4 @@
-package Services;
+package restaurant.App.Services;
 
 import restaurant.App.Model.OutputStrings;
 import restaurant.App.Model.Period.PeriodDay;
@@ -47,8 +47,7 @@ public class OutputServices {
 			if(period.getExceptionOrder() == number) {
 				if(countRepeat == 0)
 				{
-					sb.append(", ");
-					sb.append(string);
+					sb.append(count!=1? ", " + string: ""+ string);
 				}
 				countRepeat++;
 					

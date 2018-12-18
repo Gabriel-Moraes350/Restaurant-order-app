@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import Services.OutputServices;
 import restaurant.App.Factory.FactoryPeriod;
 import restaurant.App.Model.InputStrings;
 import restaurant.App.Model.Period.PeriodDay;
+import restaurant.App.Services.OutputServices;
 import restaurant.App.Utils.ResponseUtils;
 
 @RestController

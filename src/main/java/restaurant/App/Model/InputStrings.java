@@ -13,7 +13,7 @@ public class InputStrings implements Input {
 		
 		String[] strings = separatedCommaString.split(",");
 		for(String string: strings) {
-			if(string.matches("\\d")) {
+			if(string.matches("\\d") && Integer.parseInt(string) < 5) {
 				inputNumbers.add(Integer.parseInt(string));
 			}
 		}
