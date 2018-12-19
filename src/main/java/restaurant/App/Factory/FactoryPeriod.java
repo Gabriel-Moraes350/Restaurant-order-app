@@ -9,21 +9,18 @@ public class FactoryPeriod {
 	private final static String NIGHT = "night";
 	private final static String MORNING = "morning";
 	
-	private String periodParam;
 	
-	public FactoryPeriod(String param) {
-		this.periodParam = param.toLowerCase();
-	}
-
 	/**
-	 * Method to  build a period instance
+	 * Method to produce a period instance
 	 * 
 	 * @param param
 	 * @return
 	 */
-	public PeriodDay makePeriod() {
+	public static PeriodDay make(String periodParam) {
 		PeriodDay period;
-		switch(this.periodParam) {
+		periodParam = periodParam.toLowerCase();
+		
+		switch(periodParam) {
 			case NIGHT:
 				 period = new Night();
 				break;

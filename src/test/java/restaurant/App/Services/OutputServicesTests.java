@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import restaurant.App.Factory.FactoryPeriod;
+import restaurant.App.Model.OutputStrings;
 import restaurant.App.Model.Period.PeriodDay;
-import restaurant.App.Services.OutputServices;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -19,27 +19,28 @@ public class OutputServicesTests {
 	PeriodDay night;
 	
 	@Before
-	public void initObjects() {
-		morning = new FactoryPeriod("morning").makePeriod();
-		night = new FactoryPeriod("night").makePeriod();
+	public void initPeriods() {
+		night = FactoryPeriod.make("night");
+		
+		morning = FactoryPeriod.make("morning");
 	}
-
+	
 	@Test
 	public void testIfOutputCorrectBasicMorning() {
 		int[] arrayTestOutputCorrect = {1,2,3};
 		// pass period and input
-		OutputServices services = new OutputServices(morning, arrayTestOutputCorrect);
+		OutputServices services = new OutputServices(morning, arrayTestOutputCorrect, new OutputStrings());
 		
-		assertEquals("eggs, toast, coffee", services.makeOutput());
+		assertEquals("eggs, toast, coffee", services.getResult());
 	}
 	
 	@Test
 	public void testIfOutputCorrectBasicMorningWithError() {
 		int[] arrayTestOutputCorrect = {1,2,3, 4};
 		// pass period and input
-		OutputServices services = new OutputServices(morning, arrayTestOutputCorrect);
+		OutputServices services = new OutputServices(morning, arrayTestOutputCorrect, new OutputStrings());
 		
-		assertEquals("eggs, toast, coffee, error", services.makeOutput());
+		assertEquals("eggs, toast, coffee, error", services.getResult());
 	}
 	
 
@@ -47,9 +48,9 @@ public class OutputServicesTests {
 	public void testIfOutputCorrectBasicNight() {
 		int[] arrayTestOutputCorrect = {1,2,3, 4};
 		// pass period and input
-		OutputServices services = new OutputServices(night, arrayTestOutputCorrect);
+		OutputServices services = new OutputServices(night, arrayTestOutputCorrect, new OutputStrings());
 		
-		assertEquals("steak, potato, wine, cake", services.makeOutput());
+		assertEquals("steak, potato, wine, cake", services.getResult());
 	}
 	
 	@Test
@@ -57,9 +58,9 @@ public class OutputServicesTests {
 		int[] arrayTestOutputCorrect = {1,2,3, 5};
 		
 		// pass period and input
-		OutputServices services = new OutputServices(night, arrayTestOutputCorrect);
+		OutputServices services = new OutputServices(night, arrayTestOutputCorrect, new OutputStrings());
 		
-		assertEquals("steak, potato, wine, error", services.makeOutput());
+		assertEquals("steak, potato, wine, error", services.getResult());
 	}
 	
 	@Test
@@ -67,9 +68,9 @@ public class OutputServicesTests {
 		int[] arrayTestOutputCorrect = {1,1,2,3,5};
 		
 		// pass period and input
-		OutputServices services = new OutputServices(night, arrayTestOutputCorrect);
+		OutputServices services = new OutputServices(night, arrayTestOutputCorrect, new OutputStrings());
 		
-		assertEquals("steak, error", services.makeOutput());
+		assertEquals("steak, error", services.getResult());
 	}
 	
 	@Test
@@ -77,9 +78,9 @@ public class OutputServicesTests {
 		int[] arrayTestOutputCorrect = {1,2,2,4};
 		
 		// pass period and input
-		OutputServices services = new OutputServices(night, arrayTestOutputCorrect);
+		OutputServices services = new OutputServices(night, arrayTestOutputCorrect, new OutputStrings());
 		
-		assertEquals("steak, potato(x2), cake", services.makeOutput());
+		assertEquals("steak, potato(x2), cake", services.getResult());
 	}
 	
 	@Test
@@ -87,9 +88,9 @@ public class OutputServicesTests {
 		int[] arrayTestOutputCorrect = {1,2,3,3,3};
 		
 		// pass period and input
-		OutputServices services = new OutputServices(morning, arrayTestOutputCorrect);
+		OutputServices services = new OutputServices(morning, arrayTestOutputCorrect, new OutputStrings());
 		
-		assertEquals("eggs, toast, coffee(x3)", services.makeOutput());
+		assertEquals("eggs, toast, coffee(x3)", services.getResult());
 	}
 	
 	@Test
@@ -97,9 +98,9 @@ public class OutputServicesTests {
 		int[] arrayTestOutputCorrect = {5,0,1};
 		
 		// pass period and input
-		OutputServices services = new OutputServices(morning, arrayTestOutputCorrect);
+		OutputServices services = new OutputServices(morning, arrayTestOutputCorrect, new OutputStrings());
 		
-		assertEquals("error", services.makeOutput());
+		assertEquals("error", services.getResult());
 	}
 	
 

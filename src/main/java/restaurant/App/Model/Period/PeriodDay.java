@@ -2,13 +2,21 @@ package restaurant.App.Model.Period;
 
 public abstract class PeriodDay {
 	public final static String ERROR = "error";
+	
+	
 	/**
 	 * Method to get Items 
 	 * 
-	 * @return
+	 * @return strings[]
 	 */
 	public abstract String[] getItems();
 	
+	
+	/**
+	 * Method to get item exception by period
+	 * 
+	 * @return
+	 */
 	public abstract int getExceptionOrder();
 	
 	

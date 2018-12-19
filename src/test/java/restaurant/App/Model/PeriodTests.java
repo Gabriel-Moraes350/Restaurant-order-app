@@ -1,7 +1,6 @@
 package restaurant.App.Model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,9 +21,9 @@ public class PeriodTests {
 	
 	@Before
 	public void initPeriods() {
-		night = new FactoryPeriod("night").makePeriod();
+		night = FactoryPeriod.make("night");
 		
-		morning = new FactoryPeriod("morning").makePeriod();
+		morning = FactoryPeriod.make("morning");
 	}
 	
 	@Test

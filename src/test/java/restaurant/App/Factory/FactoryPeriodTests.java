@@ -20,28 +20,28 @@ public class FactoryPeriodTests {
 
 	@Test
 	public void shouldNotMapPeriod() {
-		PeriodDay period = new FactoryPeriod("").makePeriod();
+		PeriodDay period = FactoryPeriod.make("");
 		assertNull(period);
 	}
 	
 	
 	@Test
 	public void shouldReturnNight() {
-		PeriodDay period = new FactoryPeriod("night").makePeriod();
+		PeriodDay period = FactoryPeriod.make("night");
 		
 		assertEquals(new Night().getClass(), period.getClass());
 	}
 	
 	@Test
 	public void shouldReturnNightUpperCase() {
-		PeriodDay period = new FactoryPeriod("NIGHT").makePeriod();
+		PeriodDay period = FactoryPeriod.make("NIGHT");
 		
 		assertEquals(new Night().getClass(), period.getClass());
 	}
 	
 	@Test
 	public void shouldReturnMorning() {
-		PeriodDay period = new FactoryPeriod("morning").makePeriod();
+		PeriodDay period = FactoryPeriod.make("morning");
 		
 		assertEquals(new Morning().getClass(), period.getClass());
 	}

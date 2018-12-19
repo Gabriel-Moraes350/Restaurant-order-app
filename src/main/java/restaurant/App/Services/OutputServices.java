@@ -1,36 +1,49 @@
 package restaurant.App.Services;
 
-import restaurant.App.Model.OutputStrings;
+import restaurant.App.Interfaces.Output;
 import restaurant.App.Model.Period.PeriodDay;
 
 public class OutputServices {
 	private int[] inputNumbers;
 	private PeriodDay period;
 	private StringBuilder sb;
+	private int countRepeated;
+	private Output out;
 	
-	public OutputServices(PeriodDay period, int[] inputNumbers) {
+	public OutputServices(PeriodDay period, int[] inputNumbers, Output out) {
 		this.inputNumbers = inputNumbers;
 		this.period = period;
-		
+		this.out = out;
 	}
 	
-	
-	public String makeOutput() {
+	/**
+	 * Method to get result
+	 * 
+	 * @return stringResult
+	 */
+	public String getResult() {
 		// new stringBuilder
 		sb = new StringBuilder("");
 		
 		//map array input 
-		OutputStrings output = new OutputStrings(this.mapInputToString());
-		return output.getOutput();
+		this.mapInputToString();
+		
+		//set value on output
+		out.setOutput(this.formatStringToOutput());
+		
+		return out.getOutput();
 	}
 	
-	private String mapInputToString() {
+	/**
+	 * Method to map input to string
+	 */
+	private void mapInputToString() {
 		int count = 0;
-		int countRepeat = 0;
+		countRepeated = 0;
 		
 		for(int number: inputNumbers) {
 			//add commas
-			if(count++ > 0 && period.getExceptionOrder() != number) {
+			if(count++ > 0 && !this.equalsToExceptionOrder(number)) {
 				sb.append(", ");
 			}
 			
@@ -44,22 +57,27 @@ public class OutputServices {
 			}
 			
 			//check if is exception
-			if(period.getExceptionOrder() == number) {
-				if(countRepeat == 0)
+			if(this.equalsToExceptionOrder(number)) {
+				if(countRepeated == 0)
 				{
-					sb.append(count!=1? ", " + string: ""+ string);
+					sb.append(count != 1 ? ", " + string : "" + string);
 				}
-				countRepeat++;
+				countRepeated++;
 					
 			} else {
 				sb.append(string);
 			}
 			
 		}
-		return this.getStringToOutput(countRepeat);
 	}
 	
-	
+	/**
+	 * Method to check of string given has errors
+	 * 
+	 * @param checkString
+	 * @param number
+	 * @return
+	 */
 	private boolean hasErrors(String checkString, int number) {
 		if(checkString.equals(PeriodDay.ERROR))
 			return true;
@@ -72,22 +90,46 @@ public class OutputServices {
 		return false;
 	}
 	
+	
+	
+	/**
+	 * Method to check if Stringbuilder contains another string
+	 * 
+	 * @param checkString
+	 * @return
+	 */
 	private boolean checkContainString(String checkString) {
 		String completeStr = sb.toString();
 		return completeStr.contains(checkString);
 	}
 	
 	
-	private String getStringToOutput(int repeated) {
+	/**
+	 * Method to format final string
+	 * 
+	 * @param repeated
+	 * @return
+	 */
+	private String formatStringToOutput() {
 		String str = sb.toString();
 		
-		if(repeated > 1) {
+		if(this.countRepeated > 1) {
 			String exception = period.mapOrdersByParam(period.getExceptionOrder());
-			str = str.replaceAll(exception, exception + "(x"+repeated+")");
+			str = str.replaceAll(exception, exception + "(x"+this.countRepeated+")");
 		}
 		
 			
 		return str;
+	}
+	
+	/**
+	 * Method to test if number equals to order exception
+	 * 
+	 * @param number
+	 * @return
+	 */
+	private boolean equalsToExceptionOrder(int number) {
+		return period.getExceptionOrder() == number;
 	}
 	
 	
