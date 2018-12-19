@@ -19,6 +19,7 @@ import restaurant.App.Model.OutputStrings;
 import restaurant.App.Model.Period.PeriodDay;
 import restaurant.App.Services.OutputServices;
 import restaurant.App.Utils.ResponseUtils;
+import springfox.documentation.schema.Example;
 
 @RestController
 @Api(value="Base", description = "Orders Restaurant")
@@ -32,10 +33,10 @@ public class BaseController {
 	
 	
 	@RequestMapping(value="/dishes", method=RequestMethod.GET, produces="application/json")
-	@ApiOperation(value="EndPoint to get dishes by order numbers and period of the day")
+	@ApiOperation(value="EndPoint to get dishes by order numbers and period of the day", response= ResponseUtils.class)
 	@ApiResponses(value= {
 			@ApiResponse(code = 200, message = "Ok"),
-			@ApiResponse(code = 404, message="Something wrong with params")
+			@ApiResponse(code = 404, message="Something wrong with params", response = ResponseUtils.class)
 	})
 	public ResponseUtils getOrders(	@ApiParam(required= true, value="Period of the day", example = "night")
 									@RequestParam(name="period") String periodParam, 
