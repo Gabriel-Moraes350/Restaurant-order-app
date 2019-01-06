@@ -2,6 +2,8 @@ package restaurant.App.Controller;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,8 +29,9 @@ public class BaseController {
 
 	@GetMapping("/")
 	@ApiOperation(value="index")
-	public ResponseUtils index() {
-		return new ResponseUtils(true, "working...");
+	public ResponseEntity<ResponseUtils> index() {
+			String s = "teste";
+ 			return ResponseEntity.ok().body(new ResponseUtils(true, "working..."));
 	}
 	
 	
@@ -39,33 +42,22 @@ public class BaseController {
 			@ApiResponse(code = 404, message="Something wrong with params", response = ResponseUtils.class)
 	})
 	public ResponseUtils getOrders(	@ApiParam(required= true, value="Period of the day", example = "night")
-									@RequestParam(name="period") String periodParam, 
+									@RequestParam(name="period", defaultValue = "") String periodParam,
 									
 									@ApiParam(required = true, value="List of orders separated by commas", example = "1,2,3")
-									@RequestParam(name="orders") String ordersParam,
+									@RequestParam(name="orders", defaultValue = "") String ordersParam,
 									HttpServletResponse response)
 	{
-		
+
 		PeriodDay period = FactoryPeriod.make(periodParam);
-		
-		//check periodo
-		if(period == null) {
-			response.setStatus(response.SC_BAD_REQUEST);
-			return new ResponseUtils(false, "", "Period not supported");
-		}
 		
 		//input
 		InputStrings input = new InputStrings(ordersParam);
-		
-		//check input
-		if(input.getInput().length == 0) {
-			response.setStatus(response.SC_BAD_REQUEST);
-			return new ResponseUtils(false, "", "None type of dishes was passed");
-		}
 		
 		//map output
 		OutputServices outputServices = new OutputServices(period, input.getInput(), new OutputStrings());
 		
 		return new ResponseUtils(true, outputServices.getResult());
 	}
+
 }

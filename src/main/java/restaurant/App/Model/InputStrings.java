@@ -2,6 +2,7 @@ package restaurant.App.Model;
 
 import java.util.ArrayList;
 
+import restaurant.App.Exceptions.NotFoundException;
 import restaurant.App.Interfaces.Input;
 
 public class InputStrings implements Input {
@@ -35,7 +36,13 @@ public class InputStrings implements Input {
 	 */
 	@Override
 	public int[] getInput(){
-		return this.inputNumbers.stream().mapToInt(i -> i).toArray();
+
+
+		int[] array = this.inputNumbers.stream().mapToInt(i -> i).toArray();
+		if(array.length == 0)
+			throw new NotFoundException("Nenhum pedido passsado");
+
+		return array;
 	}
 	
 	
